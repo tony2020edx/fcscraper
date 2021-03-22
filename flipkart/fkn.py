@@ -39,7 +39,7 @@ def get_urls():
 
             soup = BeautifulSoup(response.text, 'lxml')
 
-            for link in soup.find_all('a', class_="_1fQZEK"):
+            for link in soup.find_all('a', attrs={'class': '_1fQZEK'}):
 
                 item_url = " https://www.flipkart.com" + link.get('href')
 
@@ -50,7 +50,7 @@ def get_urls():
                 product_urls.append(item_url)
 
                 try:
-                    mrp = link.find('div', class_="_3I9_wc _27UcVY").text.strip()  # the code to extract mrp
+                    mrp = link.find('div', attrs={'class': '_3I9_wc _27UcVY'}).text.strip() # the code to extract mrp
                     mrp = re.split("\₹", mrp)
                     mrp = mrp[-1]
                 except Exception as e:
@@ -59,7 +59,7 @@ def get_urls():
 
                 try:
 
-                    discount = link.find('div', class_="_3Ay6Sb").text.strip()
+                    discount = link.find('div', attrs={'class': '_3Ay6Sb'}).text.strip()
                     discount = re.findall(r'\d+', discount)
                     discount = discount[0]
 
