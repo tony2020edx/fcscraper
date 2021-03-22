@@ -19,7 +19,7 @@ def generate_page_url():  # function to generate the pagination urls and save it
 
     count = 0
 
-    while count < 3:
+    while count < 30:
         page_url = base_url + str(count)
 
         print(page_url)
@@ -71,7 +71,7 @@ def get_urls():
 
                 except Exception as e:
 
-                    discount = "discount is zero"
+                    discount = 0
 
                 try:  # extracting element name
 
