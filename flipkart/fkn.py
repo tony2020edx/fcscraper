@@ -4,11 +4,15 @@ from bs4 import BeautifulSoup
 
 import re
 
+import csv
+
 base_url = "https://www.flipkart.com/search?q=washing+machine&page="
 
 pagination_urls = []  # the products are listed in n mumber of pages and the urls to be stored in this list
 
 product_urls = []  # the urls to individual products
+
+all_elements = []
 
 
 def generate_page_url():  # function to generate the pagination urls and save it to the list pagination urls
@@ -99,10 +103,10 @@ def get_urls():
 
                 try:
 
-                    reviews_and_ratings = link.find('span', attrs={'class': '_2_R_DZ'}).text.strip()
+                    reviews_and_ratings = link.find('span', attrs={'class': '_2_R_DZ'}).text
                     temp = reviews_and_ratings.split()
-                    ratings = temp[0]
-                    reviews = temp[-2]
+                    ratings = temp[0].strip()
+                    reviews = temp[-2].strip()
 
                 except Exception as e:
 
@@ -119,6 +123,27 @@ def get_urls():
 
                 print(ratings)
                 print(reviews)
+
+                all_elements.append(    #saving all elements to a list
+                    {
+                        "Product_name": name,
+                        "Product_url": item_url,
+                        "brand": brand,
+                        "Sale_price": price,
+                        "MRP": mrp,
+                        "Discount_percentage": discount,
+                        "Number of ratings": ratings,
+                        "Number_of_reviews": reviews,
+
+                    }
+                )
+
+                keys = all_elements[0].keys()
+
+                with open('products.csv', 'w', newline='') as output_file: #writing all elements to csv
+                    dict_writer = csv.DictWriter(output_file, keys)
+                    dict_writer.writeheader()
+                    dict_writer.writerows(all_elements)
 
 
 
