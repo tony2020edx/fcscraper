@@ -19,7 +19,7 @@ def generate_page_url():  # function to generate the pagination urls and save it
 
     count = 0
 
-    while count < 30:
+    while count < 3:
         page_url = base_url + str(count)
 
         print(page_url)
@@ -110,7 +110,22 @@ def get_urls():
 
                 except Exception as e:
 
-                    number_of_ratings = " Ratings not available"
+                    #number_of_ratings = " Ratings not available"
+                    ratings = 0
+                    reviews = 0
+
+
+                try:
+
+                    load_type = link.find('li', attrs={'class': 'rgWa7D'}).text.strip()
+
+                except Exception as e:
+
+                    load_type = "Unknown"
+
+
+
+
 
                 print(item_url)
                 print(name)
@@ -123,6 +138,7 @@ def get_urls():
 
                 print(ratings)
                 print(reviews)
+                print(f"load type is {load_type}")
 
                 all_elements.append(    #saving all elements to a list
                     {
@@ -134,6 +150,7 @@ def get_urls():
                         "Discount_percentage": discount,
                         "Number of ratings": ratings,
                         "Number_of_reviews": reviews,
+                        "Type of washing": load_type,
 
                     }
                 )
