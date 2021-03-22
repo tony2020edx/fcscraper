@@ -154,3 +154,5 @@ def get_urls():
 
 
 get_urls()
+
+#need to add capasity, Type - automatic or semi , loading capaciy
