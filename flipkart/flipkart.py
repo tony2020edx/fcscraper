@@ -19,7 +19,7 @@ def generate_page_url():  # function to generate the pagination urls and save it
 
     count = 0
 
-    while count < 30:
+    while count < 32:
         page_url = base_url + str(count)
 
         print(page_url)
@@ -52,6 +52,12 @@ def get_urls():
                 item_url = item_url[0]
 
                 product_urls.append(item_url)
+
+                upc = re.split("\=", item_url)
+                upc = upc[-1]
+                upc = upc.replace(',', '')
+
+
 
                 try:
                     mrp = link.find('div', attrs={'class': '_3I9_wc _27UcVY'}).text.strip()  # the code to extract mrp
@@ -139,6 +145,7 @@ def get_urls():
                 print(ratings)
                 print(reviews)
                 print(f"load type is {load_type}")
+                print(f"the upc is {upc}")
 
                 all_elements.append(  # saving all elements to a list
                     {
@@ -151,13 +158,14 @@ def get_urls():
                         "Number_of_ratings": ratings,
                         "Number_of_reviews": reviews,
                         "Type_of_washing": load_type,
+                        "UPC": upc
 
                     }
                 )
 
                 keys = all_elements[0].keys()
 
-                with open('washing_machines_fk.csv', 'w', newline='') as output_file:  # writing all elements to csv
+                with open('washing_machines_fk_v1.csv', 'w', newline='') as output_file:  # writing all elements to csv
                     dict_writer = csv.DictWriter(output_file, keys)
                     dict_writer.writeheader()
                     dict_writer.writerows(all_elements)
