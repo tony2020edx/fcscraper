@@ -57,8 +57,6 @@ def get_urls():
                 upc = upc[-1]
                 upc = upc.replace(',', '')
 
-
-
                 try:
                     mrp = link.find('div', attrs={'class': '_3I9_wc _27UcVY'}).text.strip()  # the code to extract mrp
                     mrp = re.split("\₹", mrp)
@@ -165,7 +163,7 @@ def get_urls():
 
                 keys = all_elements[0].keys()
 
-                with open('washing_machines_fk_v1.csv', 'w', newline='') as output_file:  # writing all elements to csv
+                with open('washing_machines_fk_v2.csv', 'w', newline='') as output_file:  # writing all elements to csv
                     dict_writer = csv.DictWriter(output_file, keys)
                     dict_writer.writeheader()
                     dict_writer.writerows(all_elements)
