@@ -54,9 +54,11 @@ def get_urls():
                 product_urls.append(item_url)
 
                 try:
-                    mrp = link.find('div', attrs={'class': '_3I9_wc _27UcVY'}).text.strip() # the code to extract mrp
+                    mrp = link.find('div', attrs={'class': '_3I9_wc _27UcVY'}).text.strip()  # the code to extract mrp
                     mrp = re.split("\₹", mrp)
                     mrp = mrp[-1]
+                    mrp = mrp.replace(',', '')
+
                 except Exception as e:
 
                     mrp = "mrp not available"
@@ -66,7 +68,6 @@ def get_urls():
                     discount = link.find('div', attrs={'class': '_3Ay6Sb'}).text.strip()
                     discount = re.findall(r'\d+', discount)
                     discount = discount[0]
-
 
 
                 except Exception as e:
@@ -89,6 +90,7 @@ def get_urls():
                     price = link.find('div', attrs={'class': '_30jeq3 _1_WHN1'}).text.strip()
                     price = re.split("\₹", price)
                     price = price[-1]
+                    price = price.replace(',', '')
 
                 except Exception as e:
 
@@ -106,14 +108,16 @@ def get_urls():
                     reviews_and_ratings = link.find('span', attrs={'class': '_2_R_DZ'}).text
                     temp = reviews_and_ratings.split()
                     ratings = temp[0].strip()
+                    ratings = ratings.replace(',', '')
                     reviews = temp[-2].strip()
+                    reviews = reviews.replace(',', '')
+
 
                 except Exception as e:
 
-                    #number_of_ratings = " Ratings not available"
+                    # number_of_ratings = " Ratings not available"
                     ratings = 0
                     reviews = 0
-
 
                 try:
 
@@ -122,10 +126,6 @@ def get_urls():
                 except Exception as e:
 
                     load_type = "Unknown"
-
-
-
-
 
                 print(item_url)
                 print(name)
@@ -140,7 +140,7 @@ def get_urls():
                 print(reviews)
                 print(f"load type is {load_type}")
 
-                all_elements.append(    #saving all elements to a list
+                all_elements.append(  # saving all elements to a list
                     {
                         "Product_name": name,
                         "Product_url": item_url,
@@ -157,7 +157,7 @@ def get_urls():
 
                 keys = all_elements[0].keys()
 
-                with open('products.csv', 'w', newline='') as output_file: #writing all elements to csv
+                with open('washing_machines_fk.csv', 'w', newline='') as output_file:  # writing all elements to csv
                     dict_writer = csv.DictWriter(output_file, keys)
                     dict_writer.writeheader()
                     dict_writer.writerows(all_elements)
@@ -172,4 +172,4 @@ def get_urls():
 
 get_urls()
 
-#need to add capasity, Type - automatic or semi , loading capaciy
+# need to add capasity, Type - automatic or semi , loading capaciy
